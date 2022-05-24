@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { AppBar, Toolbar, Typography, Button, Hidden, IconButton } from "@mui/material";
@@ -9,6 +9,7 @@ import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import BookIcon from "@mui/icons-material/Book";
 import NavigationDrawer from "../../../shared/components/NavigationDrawer";
+import { useHistory } from "react-router-dom";
 
 const styles = theme => ({
   appBar: {
@@ -42,6 +43,9 @@ function NavBar(props) {
     mobileDrawerOpen,
     selectedTab
   } = props;
+
+  let history = useHistory();
+
   const menuItems = [
     {
       link: "/",
@@ -64,6 +68,27 @@ function NavBar(props) {
       icon: <LockOpenIcon className="text-white" />
     }
   ];
+
+  const menuItemslogout = [
+    {
+      link: "/",
+      name: "Acceuil",
+      icon: <HomeIcon className="text-white" />
+    },
+    {
+      link: "/blog",
+      name: "Nos services",
+      icon: <BookIcon className="text-white" />
+    }
+  ];
+
+  const logout = () => {
+    localStorage.clear();
+
+    history.push('/')
+  }
+
+
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
@@ -90,7 +115,8 @@ function NavBar(props) {
               </IconButton>
             </Hidden>
             <Hidden mdDown>
-              {menuItems.map(element => {
+              { localStorage.getItem("connected") === "true" ?
+              menuItemslogout.map(element => {
                 if (element.link) {
                   return (
                     <Link
@@ -120,7 +146,52 @@ function NavBar(props) {
                     {element.name}
                   </Button>
                 );
-              })}
+              })
+            :
+            menuItems.map(element => {
+              if (element.link) {
+                return (
+                  <Link
+                    key={element.name}
+                    to={element.link}
+                    className={classes.noDecoration}
+                    onClick={handleMobileDrawerClose}
+                  >
+                    <Button
+                      color="secondary"
+                      size="large"
+                      classes={{ text: classes.menuButtonText }}
+                    >
+                      {element.name}
+                    </Button>
+                  </Link>
+                );
+              }
+              return (
+                <Button
+                  color="secondary"
+                  size="large"
+                  onClick={element.onClick}
+                  classes={{ text: classes.menuButtonText }}
+                  key={element.name}
+                >
+                  {element.name}
+                </Button>
+              );
+            })
+            }
+            { localStorage.getItem("connected") === "true" &&
+              <Button
+              color="secondary"
+              size="large"
+              onClick={() => logout()}
+              classes={{ text: classes.menuButtonText }}
+              key={'logout'}
+              >
+                logout
+              </Button>
+            }
+                
             </Hidden>
           </div>
         </Toolbar>

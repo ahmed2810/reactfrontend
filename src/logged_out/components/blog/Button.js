@@ -15,12 +15,20 @@ const BasicButtons=(props)=> {
    
    let history = useHistory();
 
+   const redirectCard = () =>{
+    if(localStorage.getItem("connected") === "true" ){
+      setChoix(blogId)
+    }else{
+      loginModel()
+    }
+   }
+
     return (
     <Stack spacing={2} direction="row " className='justify-content-around' style={{margin:"10px"}}>
       
       <Button variant="contained" 
       // onClick={() => { props.loginModel() }} 
-      onClick={() => { setChoix(blogId) }} 
+      onClick={() => { redirectCard() }} 
       >prendre RDV</Button>
       <Button variant="outlined"  
       // onClick={() => { props.loginModel() }}

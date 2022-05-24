@@ -8,6 +8,7 @@ import FormDialog from "../../../shared/components/FormDialog";
 import HighlightedInformation from "../../../shared/components/HighlightedInformation";
 import ButtonCircularProgress from "../../../shared/components/ButtonCircularProgress";
 import VisibilityPasswordTextField from "../../../shared/components/VisibilityPasswordTextField";
+import axios from 'axios';
 
 const styles = (theme) => ({
   forgotPassword: {
@@ -41,31 +42,32 @@ function LoginDialog(props) {
     test2,
     
   } = props;
-  console.log(test2);
+  // console.log(test2);
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [body, setBody] = useState();
+  const [etat, setEtat] = useState(null);
   const loginEmail = useRef();
   const loginPassword = useRef();
 
-  const login = useCallback(() => {
+  const login = () => {
     setIsLoading(true);
     setStatus(null);
-    if (loginEmail.current.value !== "test@web.com") {
-      setTimeout(() => {
-        setStatus("invalidEmail");
+
+    axios.post(`http://localhost:5000/users/login`, body)
+      .then(res => {
+        if (res.status === 200) {
+          // history.push("/blog");
+          window.location.reload();
+          localStorage.setItem('connected', res.data.token ? true : false);
+          setIsLoading(false);
+          onClose()
+        }
+      }).catch(err => {
+        setEtat("verificationEmailSend")
         setIsLoading(false);
-      }, 1500);
-    } else if (loginPassword.current.value !== "HaRzwc") {
-      setTimeout(() => {
-        setStatus("invalidPassword");
-        setIsLoading(false);
-      }, 1500);
-    } else {
-      setTimeout(() => {
-        history.push("/c/dashboard");
-      }, 150);
+    });
     }
-  }, [setIsLoading, loginEmail, loginPassword, history, setStatus]);
 
   return (
     <Fragment>
@@ -92,7 +94,8 @@ function LoginDialog(props) {
               autoFocus
               autoComplete="off"
               type="email"
-              onChange={() => {
+              onChange={(e) => {
+                setBody({ ...body ,...{email: e.target.value}})
                 if (status === "invalidEmail") {
                   setStatus(null);
                 }
@@ -112,7 +115,8 @@ function LoginDialog(props) {
               label="Password"
               inputRef={loginPassword}
               autoComplete="off"
-              onChange={() => {
+              onChange={(e) => {
+                setBody({ ...body ,...{password: e.target.value}})
                 if (status === "invalidPassword") {
                   setStatus(null);
                 }
@@ -131,21 +135,14 @@ function LoginDialog(props) {
               onVisibilityChange={setIsPasswordVisible}
               isVisible={isPasswordVisible}
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               className={classes.formControlLabel}
               control={<Checkbox color="primary" />}
               label={<Typography variant="body1">Remember me</Typography>}
-            />
-            {status === "verificationEmailSend" ? (
+            /> */}
+            {etat !== null && (
               <HighlightedInformation>
-                We have send instructions on how to reset your password to your
-                email address
-              </HighlightedInformation>
-            ) : (
-              <HighlightedInformation>
-                Email is: <b>test@web.com</b>
-                <br />
-                Password is: <b>HaRzwc</b>
+                Verifier votre mot de passe ou votre addresse email 
               </HighlightedInformation>
             )}
           </Fragment>
@@ -159,11 +156,12 @@ function LoginDialog(props) {
               color="secondary"
               disabled={isLoading}
               size="large"
+              onClick={()=>login()}
             >
               Login
-              {isLoading && <ButtonCircularProgress />}
+              {/* {isLoading && <ButtonCircularProgress />} */}
             </Button>
-            <Typography
+            {/* <Typography
               align="center"
               className={classNames(
                 classes.forgotPassword,
@@ -184,7 +182,7 @@ function LoginDialog(props) {
               }}
             >
               Forgot Password?
-            </Typography>
+            </Typography> */}
           </Fragment>
         }
       />

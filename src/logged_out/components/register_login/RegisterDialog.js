@@ -6,6 +6,8 @@ import FormDialog from "../../../shared/components/FormDialog";
 import HighlightedInformation from "../../../shared/components/HighlightedInformation";
 import ButtonCircularProgress from "../../../shared/components/ButtonCircularProgress";
 import VisibilityPasswordTextField from "../../../shared/components/VisibilityPasswordTextField";
+import axios from 'axios';
+
 
 const styles = (theme) => ({
   link: {
@@ -27,28 +29,27 @@ const styles = (theme) => ({
 function RegisterDialog(props) {
   const { setStatus, theme, onClose, openTermsDialog, status, classes } = props;
   const [isLoading, setIsLoading] = useState(false);
+  const [body, setBody] = useState();
   const [hasTermsOfServiceError, setHasTermsOfServiceError] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const registerTermsCheckbox = useRef();
   const registerPassword = useRef();
   const registerPasswordRepeat = useRef();
+  const [etat, setEtat] = useState(null);
 
   const register = useCallback(() => {
-    if (!registerTermsCheckbox.current.checked) {
-      setHasTermsOfServiceError(true);
-      return;
-    }
-    if (
-      registerPassword.current.value !== registerPasswordRepeat.current.value
-    ) {
-      setStatus("passwordsDontMatch");
-      return;
-    }
-    setStatus(null);
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
+    // if (!registerTermsCheckbox.current.checked) {
+    //   setHasTermsOfServiceError(true);
+    //   return;
+    // }
+    // if (
+    //   registerPassword.current.value !== registerPasswordRepeat.current.value
+    // ) {
+    //   setStatus("passwordsDontMatch");
+    //   return;
+    // }
+    setStatus(null);
   }, [
     setIsLoading,
     setStatus,
@@ -57,6 +58,20 @@ function RegisterDialog(props) {
     registerPasswordRepeat,
     registerTermsCheckbox,
   ]);
+
+  const newuser = () => {
+    axios.post(`http://localhost:5000/users/createuser`, body)
+    .then(res => {
+      if (res.status === 200) {
+        localStorage.setItem('connected', res.data.token ? true : false);
+        setIsLoading(false);
+        onClose()
+      }
+    }).catch(err => {
+      setEtat("verificationEmailSend")
+      setIsLoading(false);
+    });
+  }
 
   return (
     <FormDialog
@@ -77,16 +92,59 @@ function RegisterDialog(props) {
             margin="normal"
             required
             fullWidth
+            error={status === "invalidnom"}
+            label="Nom"
+            autoComplete="off"
+            type="text"
+            onChange={(e) => setBody({ ...body , ...{firstName: e.target.value}})}
+            FormHelperTextProps={{ error: true }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            error={status === "invalidprenom"}
+            label="prenom"
+            autoComplete="off"
+            type="text"
+            onChange={(e) => setBody({ ...body ,...{lastName: e.target.value}})}
+            FormHelperTextProps={{ error: true }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            error={status === "invalidCIN"}
+            label="CIN"
+            autoComplete="off"
+            type="number"
+            onChange={(e) => setBody({ ...body , ...{cin: e.target.value}})}
+            FormHelperTextProps={{ error: true }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            error={status === "invalidTelephone"}
+            label="Telephone"
+            autoComplete="off"
+            type="number"
+            onChange={(e) => setBody({ ...body , ...{phone: e.target.value}})}
+            FormHelperTextProps={{ error: true }}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
             error={status === "invalidEmail"}
             label="Email Address"
-            autoFocus
             autoComplete="off"
             type="email"
-            onChange={() => {
-              if (status === "invalidEmail") {
-                setStatus(null);
-              }
-            }}
+            onChange={(e) => setBody({ ...body , ...{email: e.target.value}})}
             FormHelperTextProps={{ error: true }}
           />
           <VisibilityPasswordTextField
@@ -100,28 +158,21 @@ function RegisterDialog(props) {
             label="Password"
             inputRef={registerPassword}
             autoComplete="off"
-            onChange={() => {
-              if (
-                status === "passwordTooShort" ||
-                status === "passwordsDontMatch"
-              ) {
-                setStatus(null);
-              }
-            }}
-            helperText={(() => {
-              if (status === "passwordTooShort") {
-                return "Create a password at least 6 characters long.";
-              }
-              if (status === "passwordsDontMatch") {
-                return "Your passwords dont match.";
-              }
-              return null;
-            })()}
+            onChange={(e) => setBody({ ...body , ...{password: e.target.value}})}
+            // helperText={(() => {
+            //   if (status === "passwordTooShort") {
+            //     return "Create a password at least 6 characters long.";
+            //   }
+            //   if (status === "passwordsDontMatch") {
+            //     return "Your passwords dont match.";
+            //   }
+            //   return null;
+            // })()}
             FormHelperTextProps={{ error: true }}
             isVisible={isPasswordVisible}
             onVisibilityChange={setIsPasswordVisible}
           />
-          <VisibilityPasswordTextField
+          {/* <VisibilityPasswordTextField
             variant="outlined"
             margin="normal"
             required
@@ -151,8 +202,8 @@ function RegisterDialog(props) {
             FormHelperTextProps={{ error: true }}
             isVisible={isPasswordVisible}
             onVisibilityChange={setIsPasswordVisible}
-          />
-          <FormControlLabel
+          /> */}
+          {/* <FormControlLabel
             style={{ marginRight: 0 }}
             control={
               <Checkbox
@@ -186,8 +237,8 @@ function RegisterDialog(props) {
                 </span>
               </Typography>
             }
-          />
-          {hasTermsOfServiceError && (
+          /> */}
+          {/* {hasTermsOfServiceError && (
             <FormHelperText
               error
               style={{
@@ -208,7 +259,12 @@ function RegisterDialog(props) {
             <HighlightedInformation>
               Registration is disabled until we go live.
             </HighlightedInformation>
-          )}
+          )} */}
+           {etat !== null && (
+              <HighlightedInformation>
+                Cette utilisateur deja existe
+              </HighlightedInformation>
+            )}
         </Fragment>
       }
       actions={
@@ -219,9 +275,10 @@ function RegisterDialog(props) {
           size="large"
           color="secondary"
           disabled={isLoading}
+          onClick={()=>newuser()}
         >
           Register
-          {isLoading && <ButtonCircularProgress />}
+          {/* {isLoading && <ButtonCircularProgress />} */}
         </Button>
       }
     />

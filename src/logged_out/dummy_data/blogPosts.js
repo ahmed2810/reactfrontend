@@ -86,7 +86,7 @@ const content = (
 
 const posts = [
   {
-    title: "choixformation",
+    title: "Prévention et securité incendie",
     id: 1,
     date: 1576281600,
     src: `${process.env.PUBLIC_URL}/images/logged_out/blogPost1.jpg`,
@@ -105,7 +105,7 @@ const posts = [
   },
   
   {
-    title: "Planiification et gestion crise",
+    title: "Planification et gestion risque",
     id: 3,
     date: 1572281600,
     src: `${process.env.PUBLIC_URL}/images/logged_out/blogPost4.jpg`,
