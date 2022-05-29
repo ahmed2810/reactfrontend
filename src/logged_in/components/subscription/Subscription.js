@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import PropTypes from "prop-types";
 import { List, Divider, Paper } from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import SubscriptionTable from "./SubscriptionTable";
 import SubscriptionInfo from "./SubscriptionInfo";
+import axios from 'axios';
 
 const styles = {
   divider: {
@@ -19,14 +20,32 @@ function Subscription(props) {
     selectSubscription
   } = props;
 
+  const [datardv, setDatardv] = useState([]);
+
   useEffect(selectSubscription, [selectSubscription]);
+console.log('transactions',transactions);
+  useEffect(() => {
+    axios.get(`http://localhost:5000/demandes/searchrdv`)
+    .then(res => {
+      if (res.status === 200) {
+        console.log(res.data);
+        setDatardv(res.data)
+      }
+    }).catch(err => {
+  });
+
+  }, []);
+
+
 
   return (
     <Paper>
       <List disablePadding>
         <SubscriptionInfo openAddBalanceDialog={openAddBalanceDialog} />
         <Divider className={classes.divider} />
-        <SubscriptionTable transactions={transactions} />
+        {datardv.length > 0 &&
+          <SubscriptionTable transactions={datardv} openAddBalanceDialog={openAddBalanceDialog} />
+        }
       </List>
     </Paper>
   );

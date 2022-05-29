@@ -13,11 +13,17 @@ const BasicButtons=(props)=> {
 
    } = props;
    
-   let history = useHistory();
+   const history = useHistory();
 
-   const redirectCard = () =>{
+   const redirectCard = (mypath) =>{
+     console.log('blogId :: ', blogId);
     if(localStorage.getItem("connected") === "true" ){
-      setChoix(blogId)
+      if (mypath === 0) {
+        setChoix(blogId)
+      }else{
+        history.push({
+          pathname: '/suivie',
+      }) }
     }else{
       loginModel()
     }
@@ -27,14 +33,10 @@ const BasicButtons=(props)=> {
     <Stack spacing={2} direction="row " className='justify-content-around' style={{margin:"10px"}}>
       
       <Button variant="contained" 
-      // onClick={() => { props.loginModel() }} 
-      onClick={() => { redirectCard() }} 
+      onClick={() => { redirectCard(0) }} 
       >prendre RDV</Button>
       <Button variant="outlined"  
-      // onClick={() => { props.loginModel() }}
-      onClick={() => { history.push({
-        pathname: '/suivie',
-    }); }}
+      onClick={() => { redirectCard(1)}}
       >Suivre Demande</Button>
     </Stack>
 

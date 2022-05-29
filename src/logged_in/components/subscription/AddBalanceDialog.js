@@ -1,6 +1,7 @@
-import React, { useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import PropTypes from "prop-types";
 import { loadStripe } from "@stripe/stripe-js";
+import axios from 'axios';
 import {
   Elements,
   CardElement,
@@ -23,7 +24,8 @@ const paymentOptions = ["Credit Card", "SEPA Direct Debit"];
 
 const AddBalanceDialog = withTheme(function (props) {
   const { open, theme, onClose, onSuccess } = props;
-
+  console.log("props open",props);
+  let user = JSON.parse(localStorage.getItem("user"))
   const [loading, setLoading] = useState(false);
   const [paymentOption, setPaymentOption] = useState("Credit Card");
   const [stripeError, setStripeError] = useState("");
@@ -33,6 +35,11 @@ const AddBalanceDialog = withTheme(function (props) {
   const [amountError, setAmountError] = useState("");
   const elements = useElements();
   const stripe = useStripe();
+  const [body, setBody] = useState(
+    {
+      idagent : user._id,
+    }
+    );
 
   const onAmountChange = amount => {
     if (amount < 0) {
@@ -43,6 +50,20 @@ const AddBalanceDialog = withTheme(function (props) {
     }
     setAmount(amount);
   };
+
+  useEffect(() => {
+    console.log("body",body);
+  }, [body]);
+
+  const register = (id) => {
+    axios.post(`http://localhost:5000/demandes/validate/${id}`)
+    .then(res => {
+      if (res.status === 200) {
+        console.log('is updated', res.data);
+      }
+      }).catch(err => {
+    });
+  }
 
   const getStripePaymentInfo = () => {
     switch (paymentOption) {
@@ -79,12 +100,14 @@ const AddBalanceDialog = withTheme(function (props) {
                 amount={amount}
                 amountError={amountError}
                 onAmountChange={onAmountChange}
+                setBody={setBody}
+                body={body}
               />
             </Box>
-            <HighlightedInformation>
+            {/* <HighlightedInformation>
               You can check this integration using the credit card number{" "}
               <b>4242 4242 4242 4242 04 / 24 24 242 42424</b>
-            </HighlightedInformation>
+            </HighlightedInformation> */}
           </Fragment>
         );
       case "SEPA Direct Debit":
@@ -119,7 +142,7 @@ const AddBalanceDialog = withTheme(function (props) {
     <FormDialog
       open={open}
       onClose={onClose}
-      headline="Add Balance"
+      headline="Valider rendez-vous"
       hideBackdrop={false}
       loading={loading}
       onFormSubmit={async event => {
@@ -145,25 +168,7 @@ const AddBalanceDialog = withTheme(function (props) {
       content={
         <Box pb={2}>
           <Box mb={2}>
-            <Grid container spacing={1}>
-              {paymentOptions.map(option => (
-                <Grid item key={option}>
-                  <ColoredButton
-                    variant={
-                      option === paymentOption ? "contained" : "outlined"
-                    }
-                    disableElevation
-                    onClick={() => {
-                      setStripeError("");
-                      setPaymentOption(option);
-                    }}
-                    color={theme.palette.common.black}
-                  >
-                    {option}
-                  </ColoredButton>
-                </Grid>
-              ))}
-            </Grid>
+
           </Box>
           {renderPaymentComponent()}
         </Box>
@@ -177,8 +182,9 @@ const AddBalanceDialog = withTheme(function (props) {
             type="submit"
             size="large"
             disabled={loading}
+            onClick={()=>register()}
           >
-            Pay with Stripe {loading && <ButtonCircularProgress />}
+            Enregistrer {loading && <ButtonCircularProgress />}
           </Button>
         </Fragment>
       }

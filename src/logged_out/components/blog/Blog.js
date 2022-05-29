@@ -26,7 +26,7 @@ const styles = (theme) => ({
   },
 });
 
-function getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts,openLoginDialog) {
+function getVerticalBlogPosts(isWidthUpSm, isWidthUpMd, blogPosts, openLoginDialog) {
   const gridRows = [[], [], []];
   let rows;
   let xs;

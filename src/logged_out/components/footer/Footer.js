@@ -76,11 +76,11 @@ const styles = (theme) => ({
 const infos = [
   {
     icon: <PhoneIcon />,
-    description: "+1 555 123456",
+    description: "73383632",
   },
   {
     icon: <MailIcon />,
-    description: "support@company.com",
+    description: "ONPC@company.com",
   },
 ];
 
@@ -186,7 +186,7 @@ function Footer(props) {
                   variant="outlined"
                   type="submit"
                 >
-                  Send Message
+                  Envoyer un message
                 </ColoredButton>
               </Box>
             </form>
@@ -224,7 +224,7 @@ function Footer(props) {
           </Hidden>
           <Grid item xs={12} md={6} lg={4}>
             <Typography variant="h6" paragraph className="text-white">
-              About the Company
+              A propos de nous
             </Typography>
             <Typography style={{ color: "#8f9296" }} paragraph>
               Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce

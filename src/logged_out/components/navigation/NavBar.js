@@ -100,7 +100,7 @@ function NavBar(props) {
               display="inline"
               color="primary"
             >
-              Protection Civile
+              Protection Civile 198
             </Typography>
           
           </div>
@@ -188,7 +188,7 @@ function NavBar(props) {
               classes={{ text: classes.menuButtonText }}
               key={'logout'}
               >
-                logout
+                Deconnexion
               </Button>
             }
                 

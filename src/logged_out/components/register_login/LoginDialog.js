@@ -59,6 +59,7 @@ function LoginDialog(props) {
         if (res.status === 200) {
           // history.push("/blog");
           window.location.reload();
+          localStorage.setItem('user', JSON.stringify(res.data.user));
           localStorage.setItem('connected', res.data.token ? true : false);
           setIsLoading(false);
           onClose()

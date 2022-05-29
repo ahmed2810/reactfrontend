@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import format from "date-fns/format";
@@ -9,6 +9,8 @@ import ShareButton from "../../../shared/components/ShareButton";
 import ZoomImage from "../../../shared/components/ZoomImage";
 import smoothScrollTop from "../../../shared/functions/smoothScrollTop";
 import Button from "./Button";
+import { useHistory } from "react-router-dom";
+
 const styles = (theme) => ({
   blogContentWrapper: {
     marginLeft: theme.spacing(1),
@@ -33,12 +35,34 @@ const styles = (theme) => ({
 });
 
 function BlogPost(props) {
-  const { classes, date, title, src, content, otherArticles } = props;
+  const { classes, date, title, src, content, otherArticles, loginModel, blogId } = props;
+  const [choix, setChoix] = useState(null);
+  let history = useHistory();
 
   useEffect(() => {
-    document.title = `WaVer - ${title}`;
+    document.title = `protection civile  - ${title}`;
     smoothScrollTop();
   }, [title]);
+
+  useEffect(() => {
+    if (choix === 1) {
+      // history.push("/rdv");
+      history.push({
+        pathname: '/rdv',
+        state: { detail: choix }
+    });
+    }else if (choix === 2) {
+      history.push({
+        pathname: '/rdv',
+        state: { detail: choix }
+    });
+    }else if (choix === 3) {
+      history.push({
+        pathname: '/rdv',
+        state: { detail: choix }
+    });
+    }
+  }, [ choix ]);
 
   return (
     <Box
@@ -48,52 +72,28 @@ function BlogPost(props) {
     >
       <div className={classes.blogContentWrapper}>
         <Grid container spacing={5}>
-          <Grid item md={9}>
+          <Grid item md={12}>
             <Card className={classes.card}>
               <Box pt={3} pr={3} pl={3} pb={2}>
                 <Typography variant="h4">
                   <b>{title}</b>
                 </Typography>
-                {/* <Typography variant="body1" color="textSecondary">
-                  {format(new Date(date * 1000), "PPP", {
-                    awareOfUnicodeTokens: true,
-                  })}
-                </Typography> */}
               </Box>
               <ZoomImage className={classes.img} src={src} alt="" />
               <Box p={3}>
                 {content}
                 <Box pt={2}>
-                  {/* <Grid spacing={1} container>
-                    {["Facebook", "Twitter", "Reddit", "Tumblr"].map(
-                      (type, index) => (
-                        <Grid item key={index}>
-                          <ShareButton
-                            type={type}
-                            title="React SaaS Template"
-                            description="I found an awesome template for an webapp using React!"
-                            disableElevation
-                            variant="contained"
-                            className="text-white"
-                            classes={{
-                              label: "text-white",
-                            }}
-                          />
-                        </Grid>
-                      )
-                    )}
-                  </Grid> */}
-                    {/* <div className="text-align-right">
-      <button type="button" className="btn btn-primary" style={{margin :" 10px"}}>Contained</button>
-      <button type="button" className="btn btn-info" style={{margin :" 10px"}}>Info</button>
-      </div> */}
+               
       
-<Button/>
+                <Button     
+                  loginModel={loginModel} 
+                  setChoix = {setChoix}
+                  blogId = {blogId}/>
                 </Box>
               </Box>
             </Card>
           </Grid>
-          <Grid item md={3}>
+          {/* <Grid item md={3}>
             <Typography variant="h6" paragraph>
               Autres Services
             </Typography>
@@ -102,13 +102,14 @@ function BlogPost(props) {
                 <BlogCard
                   title={blogPost.title}
                   snippet={blogPost.snippet}
+                 
                   // date={blogPost.date}
                   
                   url={`${blogPost.url}${blogPost.params}`}
                 />
               </Box>
             ))}
-          </Grid>
+          </Grid> */}
         </Grid>
       </div>
     </Box>

@@ -14,15 +14,15 @@ function SubscriptionInfo(props) {
   const { classes, openAddBalanceDialog } = props;
   return (
     <Toolbar className={classes.toolbar}>
-      <ListItemText primary="Status" secondary="Premium Account" />
-      <Button
+      <ListItemText primary="Liste des Rendez-vous" secondary=" " />
+      {/* <Button
         variant="contained"
         color="secondary"
         onClick={openAddBalanceDialog}
         disableElevation
       >
         Add Balance
-      </Button>
+      </Button> */}
     </Toolbar>
   );
 }

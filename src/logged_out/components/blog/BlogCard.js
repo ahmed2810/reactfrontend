@@ -55,7 +55,7 @@ const styles = (theme) => ({
 });
 
 function BlogCard(props) {
-  const { classes, url, src,  title, snippet ,  loginModel, blogId  } = props;
+  const { classes, url, src,  title, snippet , loginModel, blogId  } = props;
   const [choix, setChoix] = useState(null);
   let history = useHistory();
   useEffect(() => {
@@ -63,7 +63,7 @@ function BlogCard(props) {
       // history.push("/rdv");
       history.push({
         pathname: '/rdv',
-        state: { detail: choix }
+        state: { detail: choix}
     });
     }else if (choix === 2) {
       history.push({
@@ -113,7 +113,6 @@ function BlogCard(props) {
       loginModel={loginModel} 
       setChoix = {setChoix}
       blogId = {blogId}
-      
       />
  
 

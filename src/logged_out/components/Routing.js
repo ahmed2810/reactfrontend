@@ -20,6 +20,8 @@ function Routing(props) {
       {blogPosts.map((post) => (
         <PropsRoute
           path={post.url}
+          loginModel={openLoginDialog}
+          blogId={post.id}
           component={BlogPost}
           title={post.title}
           key={post.title}

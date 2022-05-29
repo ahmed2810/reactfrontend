@@ -1,12 +1,17 @@
 import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
-import { Table, TableBody, TableCell, TablePagination, TableRow } from "@mui/material";
+import { Button, IconButton, Table, TableBody, TableCell, TablePagination, TableRow } from "@mui/material";
 import withStyles from '@mui/styles/withStyles';
 import EnhancedTableHead from "../../../shared/components/EnhancedTableHead";
 import ColorfulChip from "../../../shared/components/ColorfulChip";
 import unixToDateString from "../../../shared/functions/unixToDateString";
 import HighlightedInformation from "../../../shared/components/HighlightedInformation";
 import currencyPrettyPrint from "../../../shared/functions/currencyPrettyPrint";
+import Moment from 'react-moment';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import axios from 'axios';
+import swal from 'sweetalert';
 
 const styles = theme => ({
   tableWrapper: {
@@ -36,31 +41,36 @@ const styles = theme => ({
 
 const rows = [
   {
-    id: "description",
+    id: "fullname",
     numeric: false,
-    label: "Action"
+    label: "Nom et prenom"
   },
   {
-    id: "balanceChange",
-    numeric: false,
-    label: "Balance change"
-  },
-  {
-    id: "date",
+    id: "Date",
     numeric: false,
     label: "Date"
   },
   {
-    id: "paidUntil",
+    id: "sousservice",
     numeric: false,
-    label: "Paid until"
+    label: "sous service"
+  },
+  {
+    id: "Service",
+    numeric: false,
+    label: "Service"
+  },
+  {
+    id: "Action",
+    numeric: false,
+    label: "Action"
   }
 ];
 
 const rowsPerPage = 25;
 
 function SubscriptionTable(props) {
-  const { transactions, theme, classes } = props;
+  const { transactions, theme, classes, openAddBalanceDialog } = props;
   const [page, setPage] = useState(0);
 
   const handleChangePage = useCallback(
@@ -69,6 +79,29 @@ function SubscriptionTable(props) {
     },
     [setPage]
   );
+
+  const removeRdv = (id)=>{ 
+    swal({
+      title: "Are you sure?",
+      text: "êtes-vous sûr de supprimer cette demande",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        axios.delete(`http://localhost:5000/demandes/delete/${id}`)
+        .then(res => {
+          if (res.status === 200) {
+            console.log(res.data);
+          }
+        }).catch(err => {
+      });
+      }
+    });
+  };
+
+  
 
   if (transactions.length > 0) {
     return (
@@ -80,35 +113,27 @@ function SubscriptionTable(props) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((transaction, index) => (
                 <TableRow hover tabIndex={-1} key={index}>
+                  <TableCell component="th" scope="row">
+                    test name
+                  </TableCell>
                   <TableCell
                     component="th"
                     scope="row"
                     className={classes.firstData}
                   >
-                    {transaction.description}
+                    <Moment format="YY/MM/DD hh:mm:ss" date={transaction.dateRdv} />
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {transaction.balanceChange > 0 ? (
-                      <ColorfulChip
-                        label={`+${currencyPrettyPrint(
-                          transaction.balanceChange
-                        )}`}
-                        color={theme.palette.secondary.main}
-                      />
-                    ) : (
-                      <ColorfulChip
-                        label={currencyPrettyPrint(transaction.balanceChange)}
-                        color={theme.palette.error.dark}
-                      />
-                    )}
+                    {transaction.refSubservice}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {unixToDateString(transaction.timestamp)}
+                    {transaction.refService}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {transaction.paidUntil
-                      ? unixToDateString(transaction.paidUntil)
-                      : ""}
+                    <div style={{display: 'flex'}}>
+                      <Button onClick={()=>openAddBalanceDialog("iddemande")}><EditIcon /></Button>
+                      <Button onClick={()=>removeRdv(transaction._id)}><DeleteIcon /></Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

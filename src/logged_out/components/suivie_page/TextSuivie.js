@@ -11,7 +11,7 @@ export default function FullWidthTextField() {
         marginBottom: 3,
       }}
     >
-      <TextField fullWidth label="fullWidth" id="fullWidth" />
+      <TextField fullWidth label="Numero reçu" id="fullWidth" />
     </Box>
   );
 }
