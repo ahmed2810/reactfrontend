@@ -24,20 +24,20 @@ const paymentOptions = ["Credit Card", "SEPA Direct Debit"];
 
 const AddBalanceDialog = withTheme(function (props) {
   const { open, theme, onClose, onSuccess } = props;
-  console.log("props open",props);
   let user = JSON.parse(localStorage.getItem("user"))
   const [loading, setLoading] = useState(false);
-  const [paymentOption, setPaymentOption] = useState("Credit Card");
+  const [paymentOption, setPaymentOption] = useState("SEPA Direct Debit");
   const [stripeError, setStripeError] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [amount, setAmount] = useState(0);
   const [amountError, setAmountError] = useState("");
+  const [currentpath, setCurrentpath] = useState(window.location.pathname);
   const elements = useElements();
   const stripe = useStripe();
   const [body, setBody] = useState(
     {
-      idagent : user._id,
+      idagent : user._id
     }
     );
 
@@ -52,14 +52,15 @@ const AddBalanceDialog = withTheme(function (props) {
   };
 
   useEffect(() => {
-    console.log("body",body);
-  }, [body]);
+    console.log(body);
+  }, []);
 
   const register = (id) => {
-    axios.post(`http://localhost:5000/demandes/validate/${id}`)
+    axios.post(`http://localhost:5000/demandes/validate/${id}`, body)
     .then(res => {
       if (res.status === 200) {
-        console.log('is updated', res.data);
+        window.location.reload();
+        onClose()
       }
       }).catch(err => {
     });
@@ -87,8 +88,8 @@ const AddBalanceDialog = withTheme(function (props) {
   };
 
   const renderPaymentComponent = () => {
-    switch (paymentOption) {
-      case "Credit Card":
+    switch (currentpath) {
+      case "/c/subscription":
         return (
           <Fragment>
             <Box mb={2}>
@@ -104,13 +105,9 @@ const AddBalanceDialog = withTheme(function (props) {
                 body={body}
               />
             </Box>
-            {/* <HighlightedInformation>
-              You can check this integration using the credit card number{" "}
-              <b>4242 4242 4242 4242 04 / 24 24 242 42424</b>
-            </HighlightedInformation> */}
           </Fragment>
         );
-      case "SEPA Direct Debit":
+      case "/c/demande":
         return (
           <Fragment>
             <Box mb={2}>
@@ -124,13 +121,11 @@ const AddBalanceDialog = withTheme(function (props) {
                 amount={amount}
                 amountError={amountError}
                 onAmountChange={onAmountChange}
+                setBody={setBody}
+                body={body}
               />
             </Box>
-            <HighlightedInformation>
-              You can check this integration using the IBAN
-              <br />
-              <b>DE89370400440532013000</b>
-            </HighlightedInformation>
+
           </Fragment>
         );
       default:
@@ -142,7 +137,7 @@ const AddBalanceDialog = withTheme(function (props) {
     <FormDialog
       open={open}
       onClose={onClose}
-      headline="Valider rendez-vous"
+      headline={`Valider ${currentpath === "/c/demande" ? "demande" : "rendez-vous"}`}
       hideBackdrop={false}
       loading={loading}
       onFormSubmit={async event => {
@@ -182,7 +177,7 @@ const AddBalanceDialog = withTheme(function (props) {
             type="submit"
             size="large"
             disabled={loading}
-            onClick={()=>register()}
+            onClick={()=>register(sessionStorage.getItem('idRdv'))}
           >
             Enregistrer {loading && <ButtonCircularProgress />}
           </Button>

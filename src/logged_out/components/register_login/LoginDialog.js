@@ -9,6 +9,8 @@ import HighlightedInformation from "../../../shared/components/HighlightedInform
 import ButtonCircularProgress from "../../../shared/components/ButtonCircularProgress";
 import VisibilityPasswordTextField from "../../../shared/components/VisibilityPasswordTextField";
 import axios from 'axios';
+// import { useHistory } from "react-router-dom";
+
 
 const styles = (theme) => ({
   forgotPassword: {
@@ -42,7 +44,6 @@ function LoginDialog(props) {
     test2,
     
   } = props;
-  // console.log(test2);
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [body, setBody] = useState();
@@ -57,8 +58,13 @@ function LoginDialog(props) {
     axios.post(`http://localhost:5000/users/login`, body)
       .then(res => {
         if (res.status === 200) {
-          // history.push("/blog");
-          window.location.reload();
+          if (res.data.user.role === 1) {
+            history.push({
+              pathname: '/c/dashboard'
+          });
+          }else{
+            window.location.reload();
+          }
           localStorage.setItem('user', JSON.stringify(res.data.user));
           localStorage.setItem('connected', res.data.token ? true : false);
           setIsLoading(false);
@@ -143,7 +149,7 @@ function LoginDialog(props) {
             /> */}
             {etat !== null && (
               <HighlightedInformation>
-                Verifier votre mot de passe ou votre addresse email 
+                Verifier votre mot de passe ou votre adresse email 
               </HighlightedInformation>
             )}
           </Fragment>
@@ -160,8 +166,8 @@ function LoginDialog(props) {
               onClick={()=>login()}
             >
               Login
-              {/* {isLoading && <ButtonCircularProgress />} */}
             </Button>
+
             {/* <Typography
               align="center"
               className={classNames(

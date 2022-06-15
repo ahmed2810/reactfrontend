@@ -4,10 +4,12 @@ import { Switch } from "react-router-dom";
 import withStyles from '@mui/styles/withStyles';
 import Dashboard from "./dashboard/Dashboard";
 import Posts from "./posts/Posts";
-import Test from "./testing/Test";
+import Demande from "./testing/Demande";
 import Subscription from "./subscription/Subscription";
 import PropsRoute from "../../shared/components/PropsRoute";
 import useLocationBlocker from "../../shared/functions/useLocationBlocker";
+import SuperAdmin from "../superadmin/SuperAdmin";
+import AddForm  from "../superadmin/AddForm";
 
 
 const styles = (theme) => ({
@@ -72,17 +74,23 @@ function Routing(props) {
     <div className={classes.wrapper}>
       <Switch>
         <PropsRoute
-          path="/c/test"
-          component={Test}
-          EmojiTextArea={EmojiTextArea}
-          ImageCropper={ImageCropper}
-          Dropzone={Dropzone}
-          DateTimePicker={DateTimePicker}
+          path="/c/demande"
+          component={Demande}
+          transactions={transactions}
           pushMessageToSnackbar={pushMessageToSnackbar}
-          posts={posts}
-          setPosts={setPosts}
-          selectPosts={selectPosts}
+          selectSubscription={selectSubscription}
+          openAddBalanceDialog={openAddBalanceDialog}
         />
+         <PropsRoute
+           path="/c/add"
+          component={AddForm}
+        />
+        <PropsRoute
+           path="/c/edit/:id"
+          component={AddForm}
+        />
+        
+
         <PropsRoute
           path="/c/posts"
           component={Posts}
@@ -116,8 +124,16 @@ function Routing(props) {
           selectSubscription={selectSubscription}
           openAddBalanceDialog={openAddBalanceDialog}
         />
+         <PropsRoute
+          path="/c/superadmin"
+          component={SuperAdmin}
+          transactions={transactions}
+          pushMessageToSnackbar={pushMessageToSnackbar}
+          selectSubscription={selectSubscription}
+          openAddBalanceDialog={openAddBalanceDialog}
+        />
         <PropsRoute
-          path=""
+          path="/c/dashboard"
           component={Dashboard}
           toggleAccountActivation={toggleAccountActivation}
           pushMessageToSnackbar={pushMessageToSnackbar}

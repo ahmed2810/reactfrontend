@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { TextField, Grid, InputAdornment } from "@mui/material";
+import { TextField, Grid, InputAdornment, Select, MenuItem } from "@mui/material";
 import StripeTextField from "./StripeTextField";
 import { IbanElement } from "@stripe/react-stripe-js";
+import axios from 'axios';
 
 function StripeIBANForm(props) {
   const {
@@ -14,75 +15,40 @@ function StripeIBANForm(props) {
     name,
     setName,
     email,
-    setEmail
+    setEmail,
+    setBody,
+    body,
   } = props;
+
+
   return (
     <Grid container spacing={2} justifyContent="space-between">
-      <Grid item xs={8}>
-        <TextField
-          variant="outlined"
-          margin="none"
-          required
-          label="Your Name"
-          value={name}
-          onChange={event => {
-            setName(event.target.value);
-          }}
-          fullWidth
-          autoFocus
-          autoComplete="off"
-          type="text"
-        />
-      </Grid>
-      <Grid item xs={4}>
-        <TextField
-          required
-          value={amount}
-          onChange={event => {
-            onAmountChange(parseInt(event.target.value));
-          }}
-          error={amountError ? true : false}
-          helperText={amountError}
-          variant="outlined"
-          fullWidth
-          type="number"
-          margin="none"
-          label="Amount"
-          InputProps={{
-            startAdornment: <InputAdornment position="start">$</InputAdornment>
-          }}
-        />
-      </Grid>
+
       <Grid item xs={12}>
-        <TextField
-          required
-          variant="outlined"
-          fullWidth
-          value={email}
-          onChange={event => {
-            setEmail(event.target.value);
-          }}
-          type="email"
-          margin="none"
-          label="Email"
-        />
+      <Select
+        labelId="demo-simple-select-label"
+        fullWidth
+        variant="outlined"
+        value={body.statut}
+        label="Avis"
+        onChange={(e) => {setBody({ ...body ,...{statut: e.target.value}})}}
+      >
+        <MenuItem value={"favorable"}>favorable</MenuItem>
+        <MenuItem value={"défavorable"}>défavorable</MenuItem>
+      </Select>
       </Grid>
       <Grid item xs={12}>
         <StripeTextField
           margin="none"
           variant="outlined"
           fullWidth
-          label="IBAN"
+          label="Description"
           error={stripeError ? true : false}
           helperText={stripeError}
           required
           StripeElement={IbanElement}
           stripeOptions={{ supportedCountries: ["SEPA"] }}
-          onChange={() => {
-            if (stripeError) {
-              setStripeError("");
-            }
-          }}
+          onChange={(e) => {setBody({ ...body ,...{motifDemande: e.target.value}})}}
         ></StripeTextField>
       </Grid>
     </Grid>

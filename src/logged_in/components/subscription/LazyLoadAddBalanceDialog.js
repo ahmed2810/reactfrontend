@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 
 function LazyLoadAddBalanceDialog(props) {
-  const { open, onClose, onSuccess } = props;
+  const { open, onClose, onSuccess, data } = props;
   const [AddBalanceDialog, setAddBalanceDialog] = useState(null);
   const [hasFetchedAddBalanceDialog, setHasFetchedAddBlanceDialog] = useState(false);
 

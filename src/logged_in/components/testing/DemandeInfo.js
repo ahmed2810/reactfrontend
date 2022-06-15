@@ -10,19 +10,19 @@ const styles = {
   }
 };
 
-function SubscriptionInfo(props) {
+function DemandeInfo(props) {
   const { classes, openAddBalanceDialog } = props;
   return (
     <Toolbar className={classes.toolbar}>
-      <ListItemText primary= "Liste des Rendez-vous" />
+      <ListItemText primary="Liste des demandes" secondary=" " />
       
     </Toolbar>
   );
 }
 
-SubscriptionInfo.propTypes = {
+DemandeInfo.propTypes = {
   classes: PropTypes.object.isRequired,
   openAddBalanceDialog: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(SubscriptionInfo);
+export default withStyles(styles)(DemandeInfo);

@@ -13,25 +13,22 @@ import { autoPlay } from 'react-swipeable-views-utils';
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const images = [
+  
   {
-    label: 'San Francisco – Oakland Bay Bridge, United States',
+    label: 'image1',
     imgPath:
-    'http://admin.onpc.nat.tn/images/imgsliders/DSC_7748.png',
+    'http://www.onpc.nat.tn/images/imgsliders/6.png',
+  },
+  
+  {
+    label: 'image2',
+    imgPath:
+    'http://www.onpc.nat.tn/images/10.png',
   },
   {
-    label: 'Bird',
+    label: 'image3',
     imgPath:
-      'http://www.onpc.nat.tn/images/20.png',
-  },
-  {
-    label: 'Bali, Indonesia',
-    imgPath:
-      'http://www.onpc.nat.tn/images/imgsliders/9.png',
-  },
-  {
-    label: 'Goč, Serbia',
-    imgPath:
-      'http://admin.onpc.nat.tn/images/imgsliders/DSC_1.jpg',
+      'http://www.onpc.nat.tn/images/imgsliders/4.png',
   },
 ];
 

@@ -352,6 +352,7 @@ function Main(props) {
           openAddBalanceDialog={openAddBalanceDialog}
           setTargets={setTargets}
           setPosts={setPosts}
+          
         />
       </main>
     </Fragment>

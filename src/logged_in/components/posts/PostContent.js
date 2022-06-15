@@ -27,6 +27,7 @@ function PostContent(props) {
   } = props;
   const [page, setPage] = useState(0);
   const [isDeletePostDialogOpen, setIsDeletePostDialogOpen] = useState(false);
+  const [datardv, setDatardv] = useState([]);
   const [isDeletePostDialogLoading, setIsDeletePostDialogLoading] = useState(
     false
   );

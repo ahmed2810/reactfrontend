@@ -71,6 +71,8 @@ function RegisterDialog(props) {
       setEtat("verificationEmailSend")
       setIsLoading(false);
     });
+
+    
   }
 
   return (

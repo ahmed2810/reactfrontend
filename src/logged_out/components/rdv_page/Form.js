@@ -109,7 +109,7 @@ const Form = (props) => {
                       id="datetime-local"
                       label="Rendez-Vous"
                       type="datetime-local"
-                      defaultValue="2017-05-24T10:30"
+                      defaultValue=""
                       sx={{ width: 250 }}
                       InputLabelProps={{
                         shrink: true,

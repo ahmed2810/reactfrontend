@@ -150,24 +150,24 @@ function NavBar(props) {
   }, [setIsSideDrawerOpen]);
 
   const menuItems = [
+    // {
+    //   link: "/c/dashboard",
+    //   name: "Dashboard",
+    //   onClick: closeMobileDrawer,
+    //   icon: {
+    //     desktop: (
+    //       <DashboardIcon
+    //         className={
+    //           selectedTab === "Dashboard" ? classes.textPrimary : "text-white"
+    //         }
+    //         fontSize="small"
+    //       />
+    //     ),
+    //     mobile: <DashboardIcon className="text-white" />,
+    //   },
+    // },
     {
-      link: "/c/dashboard",
-      name: "Dashboard",
-      onClick: closeMobileDrawer,
-      icon: {
-        desktop: (
-          <DashboardIcon
-            className={
-              selectedTab === "Dashboard" ? classes.textPrimary : "text-white"
-            }
-            fontSize="small"
-          />
-        ),
-        mobile: <DashboardIcon className="text-white" />,
-      },
-    },
-    {
-      link: "/c/posts",
+      link: "/c/demande",
       name: "Posts",
       onClick: closeMobileDrawer,
       icon: {
@@ -241,9 +241,17 @@ function NavBar(props) {
                 variant="h4"
                 className={classes.brandText}
                 display="inline"
-                color="secondary"
+                color="primary"
               >
                Civile
+              </Typography>
+              <Typography
+                variant="h4"
+                className={classes.brandText}
+                display="inline"
+                color="primary"
+              >
+               198
               </Typography>
             </Hidden>
           </Box>
@@ -281,14 +289,14 @@ function NavBar(props) {
               )}
             </ListItem> */}
           </Box>
-          <IconButton
+          {/* <IconButton
             onClick={openDrawer}
             color="primary"
             aria-label="Open Sidedrawer"
             size="large"
           >
             <SupervisorAccountIcon />
-          </IconButton>
+          </IconButton> */}
           <SideDrawer open={isSideDrawerOpen} onClose={closeDrawer} />
         </Toolbar>
       </AppBar>

@@ -43,7 +43,7 @@ const rows = [
   {
     id: "fullname",
     numeric: false,
-    label: "Citoyen"
+    label: "Nom et prenom"
   },
   {
     id: "Date",
@@ -69,7 +69,7 @@ const rows = [
 
 const rowsPerPage = 25;
 
-function SubscriptionTable(props) {
+function DemandeTable(props) {
   const { transactions, theme, classes, openAddBalanceDialog } = props;
   const [page, setPage] = useState(0);
 
@@ -122,7 +122,7 @@ function SubscriptionTable(props) {
               .map((transaction, index) => (
                 <TableRow hover tabIndex={-1} key={index}>
                   <TableCell component="th" scope="row">
-                  {transaction.user}
+                    test name
                   </TableCell>
                   <TableCell
                     component="th"
@@ -179,10 +179,10 @@ function SubscriptionTable(props) {
   );
 }
 
-SubscriptionTable.propTypes = {
+DemandeTable.propTypes = {
   theme: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   transactions: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(SubscriptionTable);
+export default withStyles(styles, { withTheme: true })(DemandeTable);
