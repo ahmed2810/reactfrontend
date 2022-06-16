@@ -63,16 +63,30 @@ import { useHistory } from "react-router-dom";
     });
   }
 
-
+  const retour = () => {
+   
+  
+        history.push({
+          pathname: '/c/superadmin',
+      }) 
+       
+    
+  }
   return (
     <Box component="form" noValidate autoComplete="off" width={"50%"}>
-      
+      <style>
+        {`
+        .Posts , .Subscription{
+          display: none;
+        }
+        `}
+      </style>
       
        <TextField         
         label="Nom"
         type="text" 
-        value={DataAgent && DataAgent.firstName}            
-         sx={{ width: "100%" , margin:"0 0 20px 0"}}
+        value={DataAgent ? DataAgent.firstName : ''}            
+        sx={{ width: "100%" , margin:"0 0 20px 0"}}
          onChange={(e) => {
           setDataAgent({ ...DataAgent ,...{firstName: e.target.value}})
         }}
@@ -80,7 +94,7 @@ import { useHistory } from "react-router-dom";
          <TextField
         label="Prénom"
         type="text"
-        value={DataAgent && DataAgent.lastName}
+        value={DataAgent ? DataAgent.lastName : ''}
 
         sx={{ width: "100%" , margin:"0 0 20px 0" }}
         onChange={(e) => {
@@ -89,8 +103,8 @@ import { useHistory } from "react-router-dom";
         />
         <TextField
         label="Cin"
-        type="text"
-        value={DataAgent && DataAgent.cin}
+        type="number"
+        value={DataAgent ? DataAgent.cin : ''}
         sx={{ width: "100%" ,  margin:"0 0 20px 0" }}
         onChange={(e) => {
           setDataAgent({ ...DataAgent ,...{cin: e.target.value}})
@@ -98,8 +112,8 @@ import { useHistory } from "react-router-dom";
         />
           <TextField
         label="Telephone"
-        type="text"
-        value={DataAgent && DataAgent.phone}
+        type="number"
+        value={DataAgent ? DataAgent.phone : ''}
         sx={{ width: "100%" ,  margin:"0 0 20px 0" }}
         onChange={(e) => {
           setDataAgent({ ...DataAgent ,...{phone: e.target.value}})
@@ -108,7 +122,7 @@ import { useHistory } from "react-router-dom";
           <TextField
         label="Email"
         type="text"
-        value={DataAgent && DataAgent.email}
+        value={DataAgent ? DataAgent.email : ''}
         sx={{ width: "100%" ,  margin:"0 0 20px 0"}}
         onChange={(e) => {
           setDataAgent({ ...DataAgent ,...{email: e.target.value}})
@@ -117,12 +131,14 @@ import { useHistory } from "react-router-dom";
           <TextField
         label="Mot de passe"
         type="text"
-        value={DataAgent && DataAgent.password}
+        value={DataAgent ? DataAgent.password : ''}
         sx={{ width: "100%" ,  margin:"0 0 20px 0"}}
         onChange={(e) => {
           setDataAgent({ ...DataAgent ,...{password: e.target.value}})
         }}
         />
+       
+         <Button variant="contained" style={{margin:"15px"}} onClick={()=>retour()} >Retour</Button>
 
         {props.match.params.id ?
 
@@ -133,6 +149,7 @@ import { useHistory } from "react-router-dom";
           <Button variant="contained" onClick={()=>newagent()}>Confirmer</Button>
           </>
         }
+        
     </Box>
    
 

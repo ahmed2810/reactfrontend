@@ -47,6 +47,13 @@ function SuperAdmin(props) {
           <SuperAdminTable transactions={DataAgent} openRegisterDialog={openRegisterDialog} />
         }
       </List>
+      <style>
+        {`
+        .Posts , .Subscription{
+          display: none;
+        }
+        `}
+      </style>
     </Paper>
   );
 }

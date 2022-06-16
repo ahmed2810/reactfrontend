@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { TextField, Grid, InputAdornment, Select, MenuItem } from "@mui/material";
+import { FormControl, Grid, InputAdornment, Select, MenuItem } from "@mui/material";
 import StripeTextField from "./StripeTextField";
 import { IbanElement } from "@stripe/react-stripe-js";
 import axios from 'axios';
+import InputLabel from '@mui/material/InputLabel';
 
 function StripeIBANForm(props) {
   const {
@@ -25,6 +26,8 @@ function StripeIBANForm(props) {
     <Grid container spacing={2} justifyContent="space-between">
 
       <Grid item xs={12}>
+      <FormControl fullWidth> 
+      <InputLabel id="demo-simple-select-label">avis</InputLabel>
       <Select
         labelId="demo-simple-select-label"
         fullWidth
@@ -36,6 +39,7 @@ function StripeIBANForm(props) {
         <MenuItem value={"favorable"}>favorable</MenuItem>
         <MenuItem value={"défavorable"}>défavorable</MenuItem>
       </Select>
+      </FormControl>
       </Grid>
       <Grid item xs={12}>
         <StripeTextField

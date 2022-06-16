@@ -29,6 +29,7 @@ import SideDrawer from "./SideDrawer";
 import Balance from "./Balance";
 import NavigationDrawer from "../../../shared/components/NavigationDrawer";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useHistory } from "react-router-dom";
 
 const styles = (theme) => ({
   appBar: {
@@ -132,6 +133,8 @@ function NavBar(props) {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false);
   const isWidthUpSm = useMediaQuery(theme.breakpoints.up("sm"));
+  let history = useHistory();
+
 
   const openMobileDrawer = useCallback(() => {
     setIsMobileOpen(true);
@@ -148,6 +151,11 @@ function NavBar(props) {
   const closeDrawer = useCallback(() => {
     setIsSideDrawerOpen(false);
   }, [setIsSideDrawerOpen]);
+
+  const logout = () => {
+    localStorage.clear();
+    history.push('/')
+  }
 
   const menuItems = [
     // {
@@ -201,8 +209,9 @@ function NavBar(props) {
       },
     },
     {
-      link: "/",
+      link: "#",
       name: "Logout",
+      onClick: logout,
       icon: {
         desktop: (
           <PowerSettingsNewIcon className="text-white" fontSize="small" />
@@ -312,7 +321,7 @@ function NavBar(props) {
             {menuItems.map((element, index) => (
               <Link
                 to={element.link}
-                className={classes.menuLink}
+                className={classes.menuLink + ` ${element.name}`}
                 onClick={element.onClick}
                 key={index}
                 ref={(node) => {

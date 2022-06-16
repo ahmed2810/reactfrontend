@@ -20,15 +20,18 @@ function Subscription(props) {
     selectSubscription
   } = props;
 
-  const [datardv, setDatardv] = useState([]);
+  const [datardv, setDatardv] = useState(null);
+  const [test, setTest] = useState();
+
+
 
   useEffect(selectSubscription, [selectSubscription]);
-console.log('transactions',transactions);
+
   useEffect(() => {
     axios.get(`http://localhost:5000/demandes/searchrdv`)
     .then(res => {
       if (res.status === 200) {
-        console.log(res.data);
+        // console.log(res.data);
         setDatardv(res.data)
       }
     }).catch(err => {
@@ -43,7 +46,7 @@ console.log('transactions',transactions);
       <List disablePadding>
         <SubscriptionInfo openAddBalanceDialog={openAddBalanceDialog} />
         <Divider className={classes.divider} />
-        {datardv.length > 0 &&
+        {datardv !== null &&
           <SubscriptionTable transactions={datardv} openAddBalanceDialog={openAddBalanceDialog} />
         }
       </List>

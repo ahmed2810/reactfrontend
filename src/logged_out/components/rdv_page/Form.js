@@ -16,7 +16,7 @@ const Form = (props) => {
    var doc = new jsPDF('landscape');
    const [body, setBody] = useState(
     {
-    idUser : user._id ,
+    user : {firstName : user ? user.firstName : "", lastName : user ? user.lastName : ""} ,
     refService :  choix === 1 ? "securite" : (choix === 2) ? "formation" : "planification"
     }
     );
@@ -33,7 +33,7 @@ const Form = (props) => {
           text: "la demande a été crée",
           icon: "success",
         }).then(function() {
-          doc.text(20, 20, `Nom: ${user.firstName}   Prénom: ${user.lastName}   Telephone :${user.phone} ` );
+          doc.text(20, 20, ` Nom: ${user.firstName} \n Prénom: ${user.lastName} \n Telephone :${user.phone} ` );
           doc.save('protectionCivile.pdf');
         });
       }
@@ -110,7 +110,7 @@ const Form = (props) => {
                       label="Rendez-Vous"
                       type="datetime-local"
                       defaultValue=""
-                      sx={{ width: 250 }}
+                      sx={{ width: 300 }}
                       InputLabelProps={{
                         shrink: true,
                       }}

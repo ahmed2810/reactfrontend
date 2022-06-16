@@ -53,14 +53,39 @@ const Suivie = () => {
 
           <Box style={{margin :' 20px 0'}}>
             {visible &&
-              <>
-                <p>Votre date de visite sera le : {data.dateVisite}</p>
-                { data.statut !== null &&
-                  <>
-                    <p>Avis : {data.statut}</p>
-                    <p>Les anomalies marquées : {data.motifDemande}</p>
-                  </>
-                }
+            <>
+              {data.refService === "formation" ?
+                <div className='repdata'>
+                  <p><span className='title'>Votre date de session formation sera le :</span> {data.dateVisite}</p>
+                  { data.statut !== null ?
+                    <>
+                      <p> <span className='title'>Votre attestation est :</span> {data.statut}</p>
+                    </>
+                    :<p>Votre attestation est en cours de traitement </p>
+                  }
+                </div>
+              :(data.refService === "planification" )?
+              <div className='repdata'>
+                  
+                  { data.statut !== null ?
+                    <>
+                      <p> <span className='title'>Votre attestation est :</span> {data.statut}</p>
+
+                    </>
+                    :<p>Votre attestation est en cours de traitement </p>
+                  }
+                </div>
+                :
+                <div className='repdata'>
+                  <p><span className='title'>Votre date de visite sera le :</span> {data.dateVisite}</p>
+                  { data.statut !== null &&
+                    <>
+                      <p> <span className='title'>Avis :</span> {data.statut}</p>
+                      <p><span className='title'>Les anomalies marquées :</span> {data.motifDemande}</p>
+                    </>
+                  }
+                </div>
+              }
               </>
             }
 
@@ -68,6 +93,18 @@ const Suivie = () => {
           </Box>
   
   </div>
+  <style>
+    {`
+    .repdata{
+      padding: 20px;
+      border: 1px solid black;
+    }
+    .title{
+      font-weight: 900;
+    }
+    
+    `}
+  </style>
   </Box>
   );
 }

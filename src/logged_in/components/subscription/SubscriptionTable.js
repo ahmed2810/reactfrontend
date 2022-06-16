@@ -122,7 +122,7 @@ function SubscriptionTable(props) {
               .map((transaction, index) => (
                 <TableRow hover tabIndex={-1} key={index}>
                   <TableCell component="th" scope="row">
-                  {transaction.user}
+                  {transaction.user.length > 0 && transaction.user[0].firstName + ' ' +transaction.user[0].lastName}
                   </TableCell>
                   <TableCell
                     component="th"

@@ -31,13 +31,13 @@ function Main(props) {
 
   const selectHome = useCallback(() => {
     smoothScrollTop();
-    document.title = "protection civile";
+    document.title = "Protection Civile";
     setSelectedTab("Home");
   }, [setSelectedTab]);
 
   const selectBlog = useCallback(() => {
     smoothScrollTop();
-    document.title = "WaVer - Blog";
+    document.title = "Protection Civile";
     setSelectedTab("Blog");
   }, [setSelectedTab]);
 

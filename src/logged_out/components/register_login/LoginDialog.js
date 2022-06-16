@@ -60,7 +60,11 @@ function LoginDialog(props) {
         if (res.status === 200) {
           if (res.data.user.role === 1) {
             history.push({
-              pathname: '/c/dashboard'
+              pathname: '/c/subscription'
+          });
+          }else if (res.data.user.role === 2) {
+            history.push({
+              pathname: '/c/superadmin'
           });
           }else{
             window.location.reload();

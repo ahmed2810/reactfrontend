@@ -84,8 +84,8 @@ function NavBar(props) {
 
   const logout = () => {
     localStorage.clear();
-
     history.push('/')
+    window.location.reload();
   }
 
 
