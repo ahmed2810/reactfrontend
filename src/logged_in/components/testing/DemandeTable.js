@@ -61,6 +61,16 @@ const rows = [
     label: "Service"
   },
   {
+    id: "Num reçu",
+    numeric: false,
+    label: "Num reçu"
+  },
+  {
+    id: "Avis",
+    numeric: false,
+    label: "Avis"
+  },
+  {
     id: "Action",
     numeric: false,
     label: "Action"
@@ -137,6 +147,13 @@ function DemandeTable(props) {
                   <TableCell component="th" scope="row">
                     {transaction.refService}
                   </TableCell>
+                  <TableCell component="th" scope="row">
+                    {transaction.numRecu}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {transaction.statut}
+                  </TableCell>
+
                   <TableCell component="th" scope="row">
                     <div style={{display: 'flex'}}>
                       <Button onClick={()=>openModifier(transaction._id)}><EditIcon /></Button>

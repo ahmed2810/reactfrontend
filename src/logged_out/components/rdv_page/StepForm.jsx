@@ -8,7 +8,7 @@ export default function VerticalLinearStepper() {
   const location = useLocation();
 
 
- 
+ console.log(location.state)
 
   return (
     <Box

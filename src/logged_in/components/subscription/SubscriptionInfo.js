@@ -14,7 +14,7 @@ function SubscriptionInfo(props) {
   const { classes, openAddBalanceDialog } = props;
   return (
     <Toolbar className={classes.toolbar}>
-      <ListItemText primary= "Liste des Rendez-vous" />
+      <ListItemText  primary= "Liste des Rendez-vous" />
       
     </Toolbar>
   );

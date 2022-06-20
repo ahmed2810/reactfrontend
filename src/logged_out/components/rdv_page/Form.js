@@ -6,7 +6,10 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import swal from 'sweetalert';
 import { jsPDF } from "jspdf";
-
+//import { DateTimePicker, LocalizationProvider } from '@mui/lab';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 const Form = (props) => {
   const {
@@ -20,6 +23,7 @@ const Form = (props) => {
     refService :  choix === 1 ? "securite" : (choix === 2) ? "formation" : "planification"
     }
     );
+    const [value, setValue] = useState(new Date());
 
   
    const sendform = () => {
@@ -30,11 +34,11 @@ const Form = (props) => {
       if (res.status === 200) {
         swal({
           title: "Nouvelle demande",
-          text: "la demande a été crée",
+          text: "La demande a été crée",
           icon: "success",
         }).then(function() {
           doc.text(20, 20, ` Nom: ${user.firstName} \n Prénom: ${user.lastName} \n Telephone :${user.phone} ` );
-          doc.save('protectionCivile.pdf');
+          doc.save('ProtectionCivile.pdf');
         });
       }
     }).catch(err => {
@@ -101,6 +105,21 @@ const Form = (props) => {
                     <div style={{marginTop:"20px"}}>
 
                     <Box>
+                      {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DateTimePicker
+                          renderInput={(props) => <TextField {...props} />}
+                          label="DateTimePicker"
+                          value={value}
+                          style={{ width: "300px" }}
+                          onChange={(newValue) => {
+                            setValue(newValue);
+                          }}
+                          minDateTime={new Date()}
+                          inputProps={{
+                            step: 900, // 15 min
+                          }}
+                        />
+                      </LocalizationProvider> */}
              
                     <TextField
                     onChange={(e) => {
@@ -113,8 +132,13 @@ const Form = (props) => {
                       sx={{ width: 300 }}
                       InputLabelProps={{
                         shrink: true,
+                        
+                      }}
+                      inputProps={{
+                        step: 900, // 15 min
                       }}
                     />
+                    
                     </Box>
                     </div>
                     <div style={{marginTop:"20px"}}>
