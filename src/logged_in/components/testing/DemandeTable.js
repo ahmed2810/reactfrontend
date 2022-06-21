@@ -43,7 +43,7 @@ const rows = [
   {
     id: "fullname",
     numeric: false,
-    label: "Nom et prenom"
+    label: "Citoyen(ne)"
   },
   {
     id: "Date",
@@ -64,6 +64,11 @@ const rows = [
     id: "Num reçu",
     numeric: false,
     label: "Num reçu"
+  },
+  {
+    id: "Date Rdv",
+    numeric: false,
+    label: "Date Rdv"
   },
   {
     id: "Avis",
@@ -132,7 +137,8 @@ function DemandeTable(props) {
               .map((transaction, index) => (
                 <TableRow hover tabIndex={-1} key={index}>
                   <TableCell component="th" scope="row">
-                  {transaction.user.length > 0 && transaction.user[0].firstName + ' ' +transaction.user[0].lastName}
+                  {transaction.user !== undefined && transaction.user[0].firstName + ' ' +transaction.user[0].lastName}
+                  {/* {transaction.user.length > 0 && transaction.user[0].firstName + ' ' +transaction.user[0].lastName} */}
                   </TableCell>
                   <TableCell
                     component="th"
@@ -149,6 +155,10 @@ function DemandeTable(props) {
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {transaction.numRecu}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                   
+                    <Moment format="YY/MM/DD hh:mm:ss" date={transaction.dateVisite} />
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {transaction.statut}

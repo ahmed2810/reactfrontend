@@ -19,8 +19,9 @@ const Form = (props) => {
    var doc = new jsPDF('landscape');
    const [body, setBody] = useState(
     {
-    user : {firstName : user ? user.firstName : "", lastName : user ? user.lastName : ""} ,
-    refService :  choix === 1 ? "securite" : (choix === 2) ? "formation" : "planification"
+    user : [`${user && user._id}`] ,
+    // user : {firstName : user ? user.firstName : "", lastName : user ? user.lastName : ""} ,
+    refService :  choix === 1 ? "Securite" : (choix === 2) ? "formation" : "planification"
     }
     );
     const [value, setValue] = useState(new Date());
@@ -37,7 +38,7 @@ const Form = (props) => {
           text: "La demande a été crée",
           icon: "success",
         }).then(function() {
-          doc.text(20, 20, ` Nom: ${user.firstName} \n Prénom: ${user.lastName} \n Telephone :${user.phone} ` );
+          doc.text(20, 20, ` Nom: ${user.firstName} \n Prénom: ${user.lastName} \n Telephone :${user.phone}  ` );
           doc.save('ProtectionCivile.pdf');
         });
       }
