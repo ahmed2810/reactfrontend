@@ -130,7 +130,7 @@ import { useHistory } from "react-router-dom";
         />
           <TextField
         label="Mot de passe"
-        type="text"
+        type="password"
         value={DataAgent ? DataAgent.password : ''}
         sx={{ width: "100%" ,  margin:"0 0 20px 0"}}
         onChange={(e) => {

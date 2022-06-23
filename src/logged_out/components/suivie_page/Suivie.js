@@ -3,6 +3,9 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import moment from "moment-timezone";
+import _ from "lodash";
+
 
 
 
@@ -77,7 +80,7 @@ const Suivie = () => {
                 </div>
                 :
                 <div className='repdata'>
-                  <p><span className='title'>Votre date de visite sera le :</span> {data.dateVisite}</p>
+                  { <p><span className='title'>Votre date de visite sera le :</span> {data.dateVisite}</p> }
                   { data.statut !== null &&
                     <>
                       <p> <span className='title'>Avis :</span> {data.statut}</p>

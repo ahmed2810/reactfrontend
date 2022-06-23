@@ -1,3 +1,3 @@
 
 
-console.log(directions);
+// console.log(directions);

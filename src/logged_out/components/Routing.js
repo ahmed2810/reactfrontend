@@ -6,7 +6,6 @@ import Home from "./home/Home";
 import Blog from "./blog/Blog";
 import BlogPost from "./blog/BlogPost";
 import useLocationBlocker from "../../shared/functions/useLocationBlocker";
-import  Test  from "./blog/Test";
 import StepForm from "./rdv_page/StepForm";
 import Suivie from "./suivie_page/Suivie";
 

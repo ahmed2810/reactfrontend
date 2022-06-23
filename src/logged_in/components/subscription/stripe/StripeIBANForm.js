@@ -27,7 +27,7 @@ function StripeIBANForm(props) {
 
       <Grid item xs={12}>
       <FormControl fullWidth> 
-      <InputLabel id="demo-simple-select-label">avis</InputLabel>
+      <InputLabel id="demo-simple-select-label">Avis</InputLabel>
       <Select
         labelId="demo-simple-select-label"
         fullWidth
@@ -36,8 +36,8 @@ function StripeIBANForm(props) {
         label="Avis"
         onChange={(e) => {setBody({ ...body ,...{statut: e.target.value}})}}
       >
-        <MenuItem value={"favorable"}>favorable</MenuItem>
-        <MenuItem value={"défavorable"}>défavorable</MenuItem>
+        <MenuItem value={"Favorable"}>Favorable</MenuItem>
+        <MenuItem value={"Défavorable"}>Défavorable</MenuItem>
       </Select>
       </FormControl>
       </Grid>

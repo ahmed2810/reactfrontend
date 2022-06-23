@@ -21,6 +21,9 @@ function StripeCardForm(props) {
   } = props;
   const [value,setValue]= useState(new Date())
 
+  const disableWeekends = (date) => {
+    return (date.getDay() === 0 || date.getDay() === 6) ;
+  }
 
   const pikerchange = (e) =>{
     setBody({ ...body ,...{dateVisite: Moment(e).format('YYYY-MM-DD HH:mm:ss')}})
@@ -44,18 +47,7 @@ function StripeCardForm(props) {
         />
       </Grid>
       <Grid item xs={12}>
-        {/* <TextField
-          onChange={(e) => {setBody({ ...body ,...{dateVisite: e.target.value}})}}
-          id="datetime-local"
-          required
-          label="Date visite"
-          type="datetime-local"
-          defaultValue={new Date()}
-          // min={new Date()}
-          min="2022-06-19T00:00"
-          InputLabelProps={{shrink: true,}}
-          sx={{ width: "100%" }}
-        /> */}
+        
          <LocalizationProvider dateAdapter={AdapterDateFns} >
                         <DateTimePicker
                           renderInput={(props) => <TextField {...props} />}
@@ -64,8 +56,9 @@ function StripeCardForm(props) {
                           value={value}
                           onChange={(event) => pikerchange(event)}
                           minDateTime={new Date()}
+                          shouldDisableDate={disableWeekends}  
                           inputProps={{
-                            step: 900, // 15 min
+                            
                           }}
                         />
                       </LocalizationProvider>

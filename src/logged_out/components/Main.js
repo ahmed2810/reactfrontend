@@ -115,8 +115,7 @@ function Main(props) {
         openTermsDialog={openTermsDialog}
         openRegisterDialog={openRegisterDialog}
         openChangePasswordDialog={openChangePasswordDialog}
-       
-        test2={"hhhhhh"}
+  
       />
       <CookieRulesDialog
         open={isCookieRulesDialogOpen}

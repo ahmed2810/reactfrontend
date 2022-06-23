@@ -66,9 +66,9 @@ const rows = [
     label: "Num reçu"
   },
   {
-    id: "Date Rdv",
+    id: "Date Visite",
     numeric: false,
-    label: "Date Rdv"
+    label: "Date Visite"
   },
   {
     id: "Avis",
